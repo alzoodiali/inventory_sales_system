@@ -16,4 +16,20 @@ void main() {
     // Verify that the Add Product button is displayed.
     expect(find.text('Add Product'), findsOneWidget);
   });
+  
+testWidgets('adds a product from the UI', (WidgetTester tester) async {
+  await tester.pumpWidget(const App());
+
+  await tester.enterText(find.byType(TextField), 'keyboard');
+
+  await tester.tap(find.text('Add Product'));
+
+  await tester.pump();
+
+  expect(find.text('keyboard'), findsOneWidget);
+
+  final textField = tester.widget<TextField>(find.byType(TextField));
+  expect(textField.controller!.text, '');
+});
+
 }
